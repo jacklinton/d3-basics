@@ -1,12 +1,26 @@
-import _ from 'lodash';
+import * as d3 from 'd3';
 
-function component() {
-    const element = document.createElement('div');
+const chart = d3.select('body')
+    .append('svg')
+    .attr('id', 'chart');
 
-    // Lodash, currently included via a script, is required for this line to work
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+const req = new window.XMLHttpRequest();
+req.addEventListener('load', mungeData);
+req.open('GET', 'data/EU-referendum-result-data.csv');
+req.send();
 
-    return element;
+function mungeData() {
+    const data = d3.csvParse(this.responseText);
+    const regions = data.reduce((last, row) => {
+        if (!last[row.Region]) last[row.Region] = [];
+        last[row.Region].push(row);
+        return last;
+    }, {});
+    const regionsPctTurnout = Object.entries(regions)
+        .map(([region, areas]) => ({
+            region,
+            meanPctTurnout: d3.mean(areas, d => p.Pct_Turnout),
+        }));
+
+    renderChart(regionsPctTurnout);
 }
-
-document.body.appendChild(component());
