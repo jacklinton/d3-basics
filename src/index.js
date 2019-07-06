@@ -1,2 +1,2 @@
-import lifeExpectancyTable from './chapter2/index';
+import './chapter2/index';
 lifeExpectancyTable();
