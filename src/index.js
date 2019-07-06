@@ -59,8 +59,14 @@ function renderChart(data) {
         .append('rect')
         .attr('class', 'bar')
         .attr('x', d => x(d.region))
-        .attr('y', d => y(d.meanPctTurnout))
+        .attr('y', window.innerHeight - 50)
         .attr('width', x.bandwidth())
-        .attr('height', d => (window.innerHeight - 50) - y(d.meanPctTurnout));
+        .attr('height', 0)
+        .transition()
+        .delay((d, i) => i * 20)
+        .duration(800)
+        .attr('y', d => y(d.meanPctTurnout))
+        .attr('height', d =>
+            (window.innerHeight - 50) - y(d.meanPctTurnout));
 }
 
