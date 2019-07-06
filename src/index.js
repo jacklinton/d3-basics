@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import '../styles/index.css';
+import * as styles from '../styles/index.css';
 
 const chart = d3.select('body')
     .append('svg')
@@ -45,12 +45,12 @@ function renderChart(data) {
     chart.append('g')
         .attr('class', 'axis')
         .attr('transform',
-            `&grave;translate(0, ${window.innerHeight -50})&grave;`)
+            `translate(0, ${window.innerHeight - 50})`)
         .call(xAxis);
 
     chart.append('g')
         .attr('class', 'axis')
-        .attr('transform', 'translate(50, 0')
+        .attr('transform', 'translate(50, 0)')
         .call(yAxis);
 
     chart.selectAll('rect')

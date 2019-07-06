@@ -32,7 +32,7 @@ module.exports = {
             // We be in JavaScript land here, baby! No <style> tags for us!
             {
                 test: /\.css$/,
-                loader: 'css-loader',
+                use: ['style-loader', 'css-loader'],
             },
         ],
     },
