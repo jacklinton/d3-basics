@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import tableFactory from './table-factory';
 import * as d3 from 'd3';
 
@@ -21,5 +22,6 @@ export default async function lifeExpectancyTable() {
     data.unshift(['Country', 'Life expectancy (years from birth)']);
     return tableFactory(data).table
         .selectAll('tr')
-        .sort();
+        .filter(i => i)
+        .sort(([countryA, yearsA], [countryB, yearsB]) => yearsA - yearsB);
 }
