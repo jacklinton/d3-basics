@@ -9,6 +9,29 @@ export default function tableFactory(_rows) {
         .append('table')
         .attr('class', 'table');
 
+    const tableHeader = table.append('thead')
+        .append('tr');
+
+    const tableBody = table.append('tbody');
+
+    // Each element in "header" is a string.
+    header.forEach(value => {
+        tableHeader.append('th')
+            .text(value);
+    });
+
+    // Each element in "data" is an array
+    data.forEach(row => {
+        const tableRow = tableBody.append('tr');
+
+        row.forEach(value => {
+            // Now, each element in "row" is a string
+            tableRow.append('td')
+                .text(value);
+        });
+    });
+
+
     return {
         table,
         header,
