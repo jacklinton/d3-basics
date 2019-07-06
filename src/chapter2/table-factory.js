@@ -1,40 +1,35 @@
 import * as d3 from 'd3';
 
-export default function tableFactory(_rows) {
+export default function tableFactory (_rows) {
     const rows = Array.from(_rows);
-    const header = rows.shift(); // Remove the first row for the header
-    const data = rows; // Everything else is a normal data row
+    const header = rows.shift(); // Remove the first element for the header
 
     const table = d3.select('body')
         .append('table')
         .attr('class', 'table');
 
-    const tableHeader = table.append('thead')
-        .append('tr');
+    table.append('thead')
+        .append('tr')
+        .selectAll('td')
+        .data(header)
+        .enter()
+        .append('th')
+        .text(d => d);
 
-    const tableBody = table.append('tbody');
-
-    // Each element in "header" is a string.
-    header.forEach(value => {
-        tableHeader.append('th')
-            .text(value);
-    });
-
-    // Each element in "data" is an array
-    data.forEach(row => {
-        const tableRow = tableBody.append('tr');
-
-        row.forEach(value => {
-            // Now, each element in "row" is a string
-            tableRow.append('td')
-                .text(value);
-        });
-    });
-
+    table.append('tbody')
+        .selectAll('tr')
+        .data(rows)
+        .enter()
+        .append('tr')
+        .selectAll('td')
+        .data(d => d)
+        .enter()
+        .append('td')
+        .text(d => d);
 
     return {
         table,
         header,
-        data,
+        rows,
     };
 }
